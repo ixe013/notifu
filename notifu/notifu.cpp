@@ -14,15 +14,27 @@ enum
 {
 	//I know the compiler numbers enums, but I like source that
 	//is its own documentation...
-	eSuccess = 0,
-	eBadArgs = 1,
-	eTimedOut = 2,
-	eClickedBallon = 3,
-	eClosedBallon = 4,
+	eSuccess = 0, /// The command line was understood and executed properly
+	eBadArgs = 1, /// Some parameters were bad or missing.
+	eTimedOut = 2, /// Implies eSuccess, but a timeout was requested and the ballon was dismissed because of that
+	eClickedBallon = 3, /// Implies eSuccess, but the user closed the ballon to close it, ending the program
+	eClosedBallon = 4, /// Implies eSuccess, but the user closed the upper right corner of the ballon to close it, ending the program
 	eUnknown = 255
 };
 
-//int _tmain(int argc, const TCHAR* argv[])
+/* -------------------------------------------------------------------------- */
+/** @brief The entry point of the program (it is command line).
+* 
+* @param hInstance This module's instance
+* @param hPrevInstance Legacy parameter, always 0
+* @param lpCmdLine The command line parameters. They will be sent to the command
+*                  line parser object
+* @param nCmdShow  Recommemded way of showing a window that does not exist in
+*                  this program. It is not used.
+* 
+* @return One of the error codes documeneted in the enum above.
+*/
+/* ---------------------------------------------------------------------------- */
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
 	int errorlevel = eUnknown;
