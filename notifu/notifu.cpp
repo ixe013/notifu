@@ -25,12 +25,21 @@ enum
 /* -------------------------------------------------------------------------- */
 /** @brief The entry point of the program (it is command line).
 * 
+* This function serves as a demonstration on how to use the NotifyUser function.
+* You must somehow fill a NOTIFU_PARAM structure and pass it to NotifyUser. 
+* You will most probably throw everything else away, and that's ok. 
+*
+* The SerializeEnter and SerializeLeave are there to provide the "ballon 
+* replacement" feature of the command line utility.
+*
+* Good luck !
+*
 * @param hInstance This module's instance
 * @param hPrevInstance Legacy parameter, always 0
 * @param lpCmdLine The command line parameters. They will be sent to the command
 *                  line parser object
 * @param nCmdShow  Recommemded way of showing a window that does not exist in
-*                  this program. It is not used.
+*                  this program. It is not used.        
 * 
 * @return One of the error codes documeneted in the enum above.
 */
