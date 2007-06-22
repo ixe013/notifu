@@ -1,4 +1,35 @@
 /** \mainpage
-  * This is the main page. 
-  * I should be moving stuff from http://www.paralint.com/notifu/ over here sometimes...
+  * You will find here information that will help you reuse my code or otherwise use IUserNotification and IQueryContinue in your program.
+  *
+  * If you just want something that works out of the box, please start with the compiled binary available on the <a href="http://www.paralint.com/projects/notifu/">project page</a>.
+  *
+  * If you want to reuse the code, you will need to do 2 things :
+  *  - Fill a NOTIFU_PARAM structure
+  *  - Call NotifyUser()
+  *
+  *  You might also want to pass a IQueryContinue implementation. Feel free to use mine, 
+  *  it's implemented in CQueryContinue.
+  *
+  *  So a minimal example is this:
+  *
+  *  <pre>
+  *  ##include <windows.h>
+  *  ##include "NotifyUser.h"
+  *
+  *  int main(int argc, char *argv[])
+  *  {
+  *     CoInitialize(0);
+  *
+  *     NOTIFU_PARAM params;
+  *  
+  *     params.mTitle = "Hello, World.";
+  *     params.mText = "This is my first message using IUserNotification.";
+  *  
+  *     NotifyUser(params);
+  *  
+  *     CoUninitialize();
+  *
+  *     return 0;
+  *  }
+  *  </pre>
   */
