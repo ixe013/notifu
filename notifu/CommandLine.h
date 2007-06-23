@@ -10,7 +10,7 @@
 #endif // _MSC_VER > 1000
 
 #include "CommandLineParser.h"
-#include "NOTIFU_PARAM.h"
+#include "NotifyUser.h"
 
 class CCommandLine 
 	: public StandardCommandLineParser  

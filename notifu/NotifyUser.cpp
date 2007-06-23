@@ -1,5 +1,4 @@
-#include "StdAfx.h"
-#include <shobjidl.h>
+#include "stdafx.h"
 #include <shappmgr.h>
 
 #include "NotifyUser.h"
@@ -9,7 +8,7 @@
 //		case S_OK :	errorlevel = eClickedBallon; break;
 //		case S_FALSE :	errorlevel = eTimedOut; break;
 
-HRESULT NotifyUser(const NOTIFU_PARAM& params)
+HRESULT NotifyUser(const NOTIFU_PARAM& params, IQueryContinue *querycontinue)
 {
 	HRESULT result;
 
@@ -19,9 +18,6 @@ HRESULT NotifyUser(const NOTIFU_PARAM& params)
 
 	if(SUCCEEDED(result))
 	{
-		CQueryContinue mqc(params.mDelay);
-
-
 		result = un->SetIconInfo(params.mIcon, params.mTitle.c_str());
 		result = un->SetBalloonInfo(params.mTitle.c_str(), params.mText.c_str(), params.mType);
 		
@@ -29,14 +25,7 @@ HRESULT NotifyUser(const NOTIFU_PARAM& params)
 		//clicked on
 		result = un->SetBalloonRetry(0, 250, 0); 
 
-		result = un->Show(&mqc, 250);
-
-		if((result == S_FALSE) && !mqc.TimeoutReached())
-		{
-			//If there was a timeout but the ballon was closed before, 
-			//error code should be S_OK
-			result = S_OK;
-		}
+		result = un->Show(querycontinue, 250);
 
 		un->Release();
 	}

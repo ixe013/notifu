@@ -4,7 +4,6 @@
 //#include <shappmgr.h>
 
 #include "QueryContinue.h"
-#include "Serialize.h"
 
 CQueryContinue::CQueryContinue(DWORD d)
 {
@@ -35,9 +34,8 @@ ULONG CQueryContinue::Release()
 STDMETHODIMP CQueryContinue::QueryContinue(VOID)
 {
 	HRESULT result = S_OK; //continue is the default
-	static int n = 0;
 
-	if(ThreadWaiting() || TimeoutReached())
+	if(TimeoutReached())
 	{
 		result = S_FALSE;
 	}

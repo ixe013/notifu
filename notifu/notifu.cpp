@@ -7,6 +7,7 @@
 #include "NotifyUser.h"
 #include "RegistryFix.h"
 #include "Serialize.h"
+#include "QueryContinueOneInstance.h"
 
 CAppModule _Module;
 
@@ -79,9 +80,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 
 		gCommandLine.CopyCommandLineToParams(params);
 
+		CQueryContinueOneInstance mqc(params.mDelay);
+
 		SerializeEnter();
 
-		result = NotifyUser(params);
+		result = NotifyUser(params, &mqc);
 
 		SerializeLeave();
 
@@ -91,7 +94,16 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 		{
 		case 0x800704C7 : errorlevel = eClosedBallon; break;
 		case S_OK :	errorlevel = eClickedBallon; break;
-		case S_FALSE :	errorlevel = eTimedOut; break;
+		case S_FALSE :	
+			if(mqc.TimeoutReached())
+			{
+				errorlevel = eTimedOut; 
+			}
+			else
+			{
+				errorlevel = eClosedBallon;
+			}
+			break;
 		}
 
 		CoUninitialize();

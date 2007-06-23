@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\QueryContinueOneInstance.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\RegistryFix.cpp"
 				>
 			</File>
@@ -253,15 +257,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\NOTIFU_PARAM.h"
-				>
-			</File>
-			<File
 				RelativePath=".\NotifyUser.h"
 				>
 			</File>
 			<File
 				RelativePath=".\QueryContinue.h"
+				>
+			</File>
+			<File
+				RelativePath=".\QueryContinueOneInstance.h"
 				>
 			</File>
 			<File
