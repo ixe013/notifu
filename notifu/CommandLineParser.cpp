@@ -767,7 +767,7 @@ bool ReadFromString(const tstring& s, PairValue* pValue)
         // Microsoft MIDL Compiler Version 5.01.0164
         // Copyright (c) 1991-1997, Microsoft, Inc. All rights reserved.
         ss  << sDesc << __T(" version ") << sVersion << std::endl
-            << sCopyright << __T(" All rights reserved.") << std::endl;
+            << sCopyright << __T(" BSD Licensed.") << std::endl;
 
         return ss.str();
     }
