@@ -47,6 +47,9 @@ HRESULT CCommandLine::CopyCommandLineToParams(NOTIFU_PARAM& params)
 {
 	params.mDelay = Delay.Value();
 
+	if(params.mDelay < 120)
+		params.mDelay *= 1000;
+
 	if(Type.Value() == _T("warn"))
 		params.mType = NIIF_WARNING;
 	else if(Type.Value() == _T("error"))
