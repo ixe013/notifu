@@ -20,6 +20,7 @@ enum
 	eTimedOut = 2, /// Implies eSuccess, but a timeout was requested and the ballon was dismissed because of that
 	eClickedBallon = 3, /// Implies eSuccess, but the user closed the ballon to close it, ending the program
 	eClosedBallon = 4, /// Implies eSuccess, but the user closed the upper right corner of the ballon to close it, ending the program
+	eNotSupported = 5, /// IUserNotification is not supported on this system
 	eUnknown = 255
 };
 
@@ -103,6 +104,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 			{
 				errorlevel = eClosedBallon;
 			}
+			break;
+		case E_NOINTERFACE:
+		case REGDB_E_CLASSNOTREG:
+			errorlevel = eNotSupported; 
+			gCommandLine.Show(_T("IUserNotification is not supported on this version of Windows."));
 			break;
 		}
 
