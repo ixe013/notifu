@@ -546,12 +546,18 @@ bool ReadFromString(const tstring& s, PairValue* pValue)
         tstring CurParam;
 
         bool bInQuotes = false;
+
         for(tstring::const_iterator i = CommandLine.begin(); i != CommandLine.end(); ++i)
         {
             if (*i == __T('"'))
             {
-                bInQuotes = bInQuotes ? false : true;
-                continue;
+				bInQuotes = !bInQuotes;
+				continue;
+            }
+			else if (*i == __T('\\'))
+            {
+				if(*(i+1) == __T('"'))
+					++i;
             }
 
             if (IsWhiteSpace(*i) && !bInQuotes)

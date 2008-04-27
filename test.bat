@@ -28,3 +28,9 @@ rem The /i switch tries it's best to extract an icon from the path you give it.
 rem It supports using environment variables and an icon number.
 rem ----------------------------------------------------------------------------
 release\notifu /m "This is a simple Notifu message." /i %SYSTEMROOT%\system32\shell32.dll,43
+
+rem ----------------------------------------------------------------------------
+rem Embeeded quotes are properly escaped
+rem ----------------------------------------------------------------------------
+release\notifu /m "\"Theo Est\" <test@sender.example.>" 
+
