@@ -2,4 +2,8 @@
 
 vcbuild /nologo /nohtmllog %* notifu.sln "Release|Win32"
 
-doxygen notifu.doxygen
+echo ------------------------
+echo Generating documentation
+echo ------------------------
+rd /s /q html
+doxygen doxygen\notifu.doxygen
