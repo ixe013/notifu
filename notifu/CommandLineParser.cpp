@@ -556,7 +556,7 @@ bool ReadFromString(const tstring& s, PairValue* pValue)
             }
 			else if (*i == __T('\\'))
             {
-				if(*(i+1) == __T('"'))
+				if(bInQuotes && (*(i+1) == __T('"')))
 					++i;
             }
 

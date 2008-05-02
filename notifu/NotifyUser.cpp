@@ -32,4 +32,3 @@ HRESULT NotifyUser(const NOTIFU_PARAM& params, IQueryContinue *querycontinue)
 
 	return result;
 }
-

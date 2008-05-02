@@ -18,8 +18,8 @@ class CCommandLine
 public:
 	RestrictedValueArg<tstring> Type;
 	ValueArg<int> Delay;
-	ValueArg<tstring> Title;
-	ValueArg<tstring> Text;
+	MultiValueArg<tstring, 0>  Title;
+	MultiValueArg<tstring, 1> Text;
 	FlagArg Fix;
 	ValueArg<tstring> IconFileName;
 

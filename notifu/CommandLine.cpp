@@ -32,7 +32,7 @@ void CCommandLine::Setup()
 
 	Delay.SetDefaultValue(0);
 	Type.SetDefaultValue(_T("info"));
-	Title.SetDefaultValue(_T("Notifu message"));
+	//Title.SetDefaultValue(_T("Notifu message"));
 	IconFileName.SetDefaultValue(_T("parent")); 
 
 	AddFlag(Type);
@@ -62,9 +62,21 @@ HRESULT CCommandLine::CopyCommandLineToParams(NOTIFU_PARAM& params)
 	if(params.mIcon == 0)
 		params.mIcon = LoadIcon(_Module.GetResourceInstance(), MAKEINTRESOURCE(IDI_NOTIFU));
 
-	params.mTitle = Title.Value();
+	std::vector<tstring>::const_iterator i;
 
-	params.mText = Text.Value();
+	if(Title.size() == 0)
+		Title.ConsumeValue(_T("Notifu message"));
+
+	for(i=Title.Values().begin(); i!=Title.Values().end(); ++i)
+	{
+		params.mTitle += *i;
+	}
+
+
+	for(i=Text.Values().begin(); i!=Text.Values().end(); ++i)
+	{
+		params.mText += *i;
+	}
 
 	return S_OK;
 }
