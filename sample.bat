@@ -1,0 +1,1 @@
+@notifu /p "Hello, World!" /m "Thank you for giving my Notifu utility a try. I hope it will make you a hero (or at least make your life easier).
