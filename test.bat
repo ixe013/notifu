@@ -39,3 +39,8 @@ rem Concatenation of multiple M and P parameters
 rem ----------------------------------------------------------------------------
 release\notifu /p "Version " /p 1.3 /m "This is " /m a /m " test of " /m concatenation
 
+
+rem ----------------------------------------------------------------------------
+rem Introducing carriage return and line feed for each /n encountered
+rem ----------------------------------------------------------------------------
+release\notifu /p "Version " /p 1.4 /m "This is " /m a /m " test of\n" /m returns /m "\n" /m "and other line feeds"

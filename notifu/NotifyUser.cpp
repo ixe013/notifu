@@ -18,9 +18,22 @@ HRESULT NotifyUser(const NOTIFU_PARAM& params, IQueryContinue *querycontinue)
 
 	if(SUCCEEDED(result))
 	{
-		result = un->SetIconInfo(params.mIcon, params.mTitle.c_str());
-		result = un->SetBalloonInfo(params.mTitle.c_str(), params.mText.c_str(), params.mType);
+		const std::basic_string<TCHAR> crlf_text(_T("\\n"));
+		const std::basic_string<TCHAR> crlf(_T("\n"));
+		std::basic_string<TCHAR> text(params.mText);
+		size_t look = 0;
+		size_t found;
 		
+		//Replace \n with actual CRLF pair
+		while((found = text.find(crlf_text, look)) != std::string::npos)
+		{
+			text.replace(found, crlf_text.size(), crlf);
+			look = found+1;
+		}
+
+		result = un->SetIconInfo(params.mIcon, params.mTitle.c_str());
+		result = un->SetBalloonInfo(params.mTitle.c_str(), text.c_str(), params.mType);
+
 		//Looks like it controls what happends when the X button is
 		//clicked on
 		result = un->SetBalloonRetry(0, 250, 0); 
