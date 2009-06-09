@@ -1,11 +1,12 @@
 #include "StdAfx.h"
 
 #include <shobjidl.h>
-//#include <shappmgr.h>
+#include "trace.h"
 
 #include "QueryContinue.h"
 
 CQueryContinue::CQueryContinue(DWORD d)
+ : mDelay(0)
 {
 	SetTimeout(d);
 }
@@ -45,6 +46,7 @@ STDMETHODIMP CQueryContinue::QueryContinue(VOID)
 
 void CQueryContinue::SetTimeout(DWORD d)
 {
+	TRACE(eINFO, L"Timeout value set at %d milliseconds\n", d);
 	 mDelay = d;
 	 mStarted = GetTickCount();
 }
@@ -54,7 +56,11 @@ bool CQueryContinue::TimeoutReached() const
 	bool result = false;
 
 	if(mDelay)
-		result = (GetTickCount() - mStarted) > mDelay;
+   {
+      DWORD el = GetTickCount()-mStarted;
+		result = el > mDelay;
+      TRACE(eINFO, L"%d milliseconds elapsed (%d)\n", el, result);
+   }
 
 	return result;
 }

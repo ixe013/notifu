@@ -202,6 +202,7 @@ public:
     bool Found() const;
 
     void SetFound(bool bFound = true);
+    void SetDocumented(bool bDocumented = true);
 
     bool Matches(const tstring& sName) const;
 
@@ -225,6 +226,7 @@ protected:
     bool                    m_bCaseSensitive:1;
     std::vector<tstring>    m_rgNames;
     tstring                 m_sDescription;
+    bool                    m_bDocumented;
 };
 
 class FlagArg : public Argument

@@ -92,7 +92,7 @@ HICON GoFindAnIcon(LPCTSTR path)
 	HICON icon = 0;
 
 	//not using our parent's icon
-	if(_tcsicmp(_T("parent"), path))
+	if(_tcsicmp(L"parent", path))
 	{
 		icon = (HICON)LoadImage(0, path, IMAGE_ICON, GetSystemMetrics(SM_CXSMICON), GetSystemMetrics(SM_CYSMICON), LR_LOADFROMFILE|LR_LOADMAP3DCOLORS);
 		if(!icon)

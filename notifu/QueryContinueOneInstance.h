@@ -6,10 +6,14 @@
 class CQueryContinueOneInstance
 	: public CQueryContinue
 {
+protected:
+   bool mReplaced;
+
 public:
 	CQueryContinueOneInstance(DWORD d = 0);
 
 	STDMETHOD(QueryContinue)(VOID);
+   bool WasReplaced();
 };
     
 #endif

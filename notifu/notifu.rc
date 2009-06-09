@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,4,1,0
- PRODUCTVERSION 1,4,1,0
+ FILEVERSION 1,5,0,0
+ PRODUCTVERSION 1,5,0,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -72,13 +72,13 @@ BEGIN
             VALUE "Comments", "This free, open source utility lets you display a yellow pop-up balloon in the from the tray, using the same API in Windows itself uses (IUserNotification)."
             VALUE "CompanyName", "Paralint.com"
             VALUE "FileDescription", "Notifu uses IUserNotification to display a yellow pop-up balloon. Type /? for more information."
-            VALUE "FileVersion", "1.4.1"
+            VALUE "FileVersion", "1.5"
             VALUE "InternalName", "notifu"
             VALUE "LegalCopyright", "http://www.paralint.com/projects/notifu/"
             VALUE "LegalTrademarks", "BSD license, have fun."
             VALUE "OriginalFilename", "notifu.exe"
             VALUE "ProductName", "Notifu"
-            VALUE "ProductVersion", "1.4.1"
+            VALUE "ProductVersion", "1.5"
         END
     END
     BLOCK "VarFileInfo"

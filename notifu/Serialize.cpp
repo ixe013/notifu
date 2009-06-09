@@ -1,8 +1,8 @@
 #include "StdAfx.h"
 #include "Serialize.h"
 
-static const TCHAR *gAvailableSemaphoreName = _T("Local\\NA-06603283-A2A6-4fbc-A659-60851EC426DA");
-static const TCHAR *gWaitingSemaphoreName = _T("Local\\NW-D20C9303-7E39-452c-8E3C-CE6020778CB9");
+static const TCHAR *gAvailableSemaphoreName = L"Local\\NA-06603283-A2A6-4fbc-A659-60851EC426DA";
+static const TCHAR *gWaitingSemaphoreName = L"Local\\NW-D20C9303-7E39-452c-8E3C-CE6020778CB9";
 
 static HANDLE gAvailableSemaphore = CreateSemaphore(0, 1, 1, gAvailableSemaphoreName); 
 static HANDLE gWaitingSemaphore = CreateSemaphore(0, 0, 1024, gWaitingSemaphoreName); //event

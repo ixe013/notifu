@@ -14,26 +14,27 @@ CCommandLine gCommandLine;
 //////////////////////////////////////////////////////////////////////
 
 CCommandLine::CCommandLine()
-: Type(_T("t"), _T("The type of message to display"))
-, Delay(_T("d"), _T("The number of milliseconds to display (omit or 0 for infinit)"))
-, Title(_T("p"), _T("The title (or prompt) of the ballon"))
-, Text(_T("m"), _T("The message text"))
-, Fix(_T("e"), _T("Enable ballon tips in the registry (for this user only)"))
-, IconFileName(_T("i"), _T("Specify an icon to use (\"parent\" uses the icon of the parent process)"))
+: Type(L"t", L"The type of message to display")
+, Delay(L"d", L"The number of milliseconds to display (omit or 0 for infinit)")
+, Title(L"p", L"The title (or prompt) of the ballon")
+, Text(L"m", L"The message text")
+, Fix(L"e", L"Enable ballon tips in the registry (for this user only)")
+, ForceXP(L"xp", L"Force WindowsXP ballon tips behavior")
+, IconFileName(L"i", L"Specify an icon to use ('parent' uses the icon of the parent process)")
 {
 }
 
 
 void CCommandLine::Setup()
 {
-	Type.AddValue(_T("info"), _T("The message is an informational message"));
-	Type.AddValue(_T("warn"), _T("The message is an warning message"));
-	Type.AddValue(_T("error"), _T("The message is an error message"));
+	Type.AddValue(L"info", L"The message is an informational message");
+	Type.AddValue(L"warn", L"The message is an warning message");
+	Type.AddValue(L"error", L"The message is an error message");
 
 	Delay.SetDefaultValue(0);
-	Type.SetDefaultValue(_T("info"));
-	//Title.SetDefaultValue(_T("Notifu message"));
-	IconFileName.SetDefaultValue(_T("parent")); 
+	Type.SetDefaultValue(L"info");
+	//Title.SetDefaultValue(L"Notifu message");
+	IconFileName.SetDefaultValue(L"parent"); 
 
 	AddFlag(Type);
 	AddFlag(Delay);
@@ -41,6 +42,7 @@ void CCommandLine::Setup()
 	AddFlag(Text);
 	AddFlag(IconFileName);
 	AddFlag(Fix);
+	AddFlag(ForceXP);
 }
 
 HRESULT CCommandLine::CopyCommandLineToParams(NOTIFU_PARAM& params)
@@ -50,12 +52,14 @@ HRESULT CCommandLine::CopyCommandLineToParams(NOTIFU_PARAM& params)
 	if(params.mDelay < 120)
 		params.mDelay *= 1000;
 
-	if(Type.Value() == _T("warn"))
+	if(Type.Value() == L"warn")
 		params.mType = NIIF_WARNING;
-	else if(Type.Value() == _T("error"))
+	else if(Type.Value() == L"error")
 		params.mType = NIIF_ERROR;
 	else
 		params.mType = NIIF_INFO;
+
+   params.mForceXP = ForceXP;
 
 	params.mIcon = GoFindAnIcon(IconFileName.Value().c_str());
 
@@ -65,13 +69,12 @@ HRESULT CCommandLine::CopyCommandLineToParams(NOTIFU_PARAM& params)
 	std::vector<tstring>::const_iterator i;
 
 	if(Title.size() == 0)
-		Title.ConsumeValue(_T("Notifu message"));
+		Title.ConsumeValue(L"Notifu message");
 
 	for(i=Title.Values().begin(); i!=Title.Values().end(); ++i)
 	{
 		params.mTitle += *i;
 	}
-
 
 	for(i=Text.Values().begin(); i!=Text.Values().end(); ++i)
 	{

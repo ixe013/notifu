@@ -5,8 +5,9 @@ setlocal
 SET PROJECT_NAME=notifu
 
 echo Getting repository URL
-SET TEMP_NAME=%RANDOM%-%RANDOM%.tmp
-svn info | findstr URL | gawk '{print $2}' > %TEMP_NAME%
+SET TEMP_NAME=.%RANDOM%_%RANDOM%.tmp
+for /f "tokens=2" %%i IN ('svn info') DO @echo %%i | findstr /i /c:http >> %TEMP_NAME%
+
 
 SET /P SVN_URL= < %TEMP_NAME%
 del %TEMP_NAME%
@@ -21,10 +22,9 @@ zip -rp -q ..\%PROJECT_NAME%-src.zip %PROJECT_NAME%\*
 
 pushd %PROJECT_NAME%
 
-echo Building release configuration
-for %%i in (*.sln) do msbuild %%i /nologo /v:q /p:Configuration=Release /t:Rebuild
-echo Building debug configuration
-for %%i in (*.sln) do msbuild %%i /nologo /v:q /p:Configuration=Debug   /t:Rebuild
+rem Let's build all configurations
+set VCBUILD_DEFAULT_CFG=
+vcbuild /rebuild
 
 echo Creating binary zip
 zip -j -q ..\..\%PROJECT_NAME%.zip Sample.bat Test.bat release\%PROJECT_NAME%.exe

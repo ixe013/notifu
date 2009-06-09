@@ -1,0 +1,10 @@
+REGEDIT4
+
+;****************************************************************************
+;* Should things go bad, you can enable a trace by adding this to the registry.
+;* Send the trace to me (guillaume@paralint.com) along with a description and
+;* we will work it out
+;****************************************************************************
+[HKEY_CURRENT_USER\SOFTWARE\Paralint.com\Notifu\Debug]
+"Level"="Error"
+"Output"="OutputDebugString"

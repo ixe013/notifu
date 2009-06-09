@@ -28,6 +28,7 @@ bool ReadFromString(const tstring& s, tstring* pValue)
 	Argument::Argument(const tstring& sName, const tstring& sDescription)
     :   m_bFound(false),
         m_bCaseSensitive(false),
+        m_bDocumented(true),
         m_sDescription(sDescription)
     {
         _ASSERTE(!sName.empty());
@@ -63,6 +64,11 @@ bool ReadFromString(const tstring& s, tstring* pValue)
     void Argument::SetFound(bool bFound)
     {
         m_bFound = bFound;
+    }
+
+    void Argument::SetDocumented(bool bDocumented)
+    {
+        m_bDocumented = bDocumented;
     }
 
     bool Argument::Matches(const tstring& sName) const
@@ -591,11 +597,6 @@ bool ReadFromString(const tstring& s, PairValue* pValue)
 
         for(std::vector<tstring>::const_iterator psArg = rgsArgs.begin(); psArg != rgsArgs.end(); ++psArg)
         {
-#ifdef _DEBUG
-            OutputDebugString(__T("Processing arg: "));
-            OutputDebugString(psArg->c_str());
-            OutputDebugString(__T("\n"));
-#endif
             Argument*   pArg = 0;
             bool        bIsFlag = false;
 
@@ -878,14 +879,14 @@ bool ReadFromString(const tstring& s, PairValue* pValue)
     {
         // Clean up
         ClearError();
-        sContents = _T("");
+        sContents = L"";
     
         FileHandle hFile = CreateFile(sFullPath.c_str(), GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
     
         if( !hFile )
         {
             _ASSERTE(!"Failed to open parameter file");
-            m_sError = _T("Failed to open file ");
+            m_sError = L"Failed to open file ";
             m_sError += sFullPath;
         
             return false;
@@ -897,7 +898,7 @@ bool ReadFromString(const tstring& s, PairValue* pValue)
         if( GetFileInformationByHandle(hFile, &bhfi) == 0 )
         {
             _ASSERTE(!"Failed to get file information");
-            m_sError = _T("Failed to get file information for ");
+            m_sError = L"Failed to get file information for ";
             m_sError += sFullPath;
         
             return false;
@@ -907,9 +908,9 @@ bool ReadFromString(const tstring& s, PairValue* pValue)
         if( bhfi.nFileSizeHigh != 0 )
         {
             _ASSERTE(!"Ridiculously large parameter file");
-            m_sError = _T("File ");
+            m_sError = L"File ";
             m_sError += sFullPath;
-            m_sError += _T(" is too large");
+            m_sError += L" is too large";
         
             return false;
         }
@@ -925,7 +926,7 @@ bool ReadFromString(const tstring& s, PairValue* pValue)
         if( !hFileMapping )
         {
             _ASSERTE(!"Failed to create file mapping");
-            m_sError = _T("Failed to create file mapping on file ");
+            m_sError = L"Failed to create file mapping on file ";
             m_sError += sFullPath;
         
             return false;
@@ -936,7 +937,7 @@ bool ReadFromString(const tstring& s, PairValue* pValue)
         if( !lpView )
         {
             _ASSERTE(!"Failed to map view of file");
-            m_sError = _T("Failed to map view of file ");
+            m_sError = L"Failed to map view of file ";
             m_sError += sFullPath;
         
             return false;
@@ -973,9 +974,9 @@ bool ReadFromString(const tstring& s, PairValue* pValue)
             else if( wMaybeUnicodeMarker == 0xFFFE )
             {
                 _ASSERTE(!"Big-endian unicode not supported");
-                m_sError = _T("File ");
+                m_sError = L"File ";
                 m_sError += sFullPath;
-                m_sError += _T(" is in big-endian unicode format");
+                m_sError += L" is in big-endian unicode format";
             
                 return false;
             }
@@ -994,9 +995,9 @@ bool ReadFromString(const tstring& s, PairValue* pValue)
             _ASSERTE(e.what());
             e;  // Avoid "unreferenced local variable"
         
-            m_sError = _T("Failed to convert character data from file ");
+            m_sError = L"Failed to convert character data from file ";
             m_sError += sFullPath;
-            m_sError += _T(".");
+            m_sError += L".";
         
             return false;
         }
@@ -1004,12 +1005,12 @@ bool ReadFromString(const tstring& s, PairValue* pValue)
         // Replace CRs & LFs
         std::replace_if(sContents.begin(),
                         sContents.end(),
-                        std::bind2nd(std::equal_to<TCHAR>(), _T('\r')),
-                        _T(' '));
+                        std::bind2nd(std::equal_to<TCHAR>(), '\r'),
+                        ' ');
         std::replace_if(sContents.begin(),
                         sContents.end(),
-                        std::bind2nd(std::equal_to<TCHAR>(), _T('\n')),
-                        _T(' '));
+                        std::bind2nd(std::equal_to<TCHAR>(), L'\n'),
+                        L' ');
     
         return true;
     }
