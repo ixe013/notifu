@@ -7,6 +7,10 @@
 #include "resource.h"
 #include "Icon.h"
 
+#ifndef NIIF_RESPECT_QUIET_TIME 
+#define NIIF_RESPECT_QUIET_TIME 0x00000080
+#endif
+
 CCommandLine gCommandLine;
 
 //////////////////////////////////////////////////////////////////////
@@ -19,6 +23,8 @@ CCommandLine::CCommandLine()
 , Title(L"p", L"The title (or prompt) of the ballon")
 , Text(L"m", L"The message text")
 , Fix(L"e", L"Enable ballon tips in the registry (for this user only)")
+, NoSound(L"q", L"Do not play a sound when the tooltip is displayed")
+, NoRespect(L"w", L"Show the tooltip even if the user is in the quiet period that follows his very first login (Windows 7 and up)")
 , ForceXP(L"xp", L"Force WindowsXP ballon tips behavior")
 , IconFileName(L"i", L"Specify an icon to use ('parent' uses the icon of the parent process)")
 {
@@ -42,6 +48,8 @@ void CCommandLine::Setup()
 	AddFlag(Text);
 	AddFlag(IconFileName);
 	AddFlag(Fix);
+	AddFlag(NoSound);
+	AddFlag(NoRespect);
 	AddFlag(ForceXP);
 }
 
@@ -58,6 +66,12 @@ HRESULT CCommandLine::CopyCommandLineToParams(NOTIFU_PARAM& params)
 		params.mType = NIIF_ERROR;
 	else
 		params.mType = NIIF_INFO;
+
+	if(NoSound)
+		params.mType |= NIIF_NOSOUND;
+
+	if(!NoRespect)
+		params.mType |= NIIF_RESPECT_QUIET_TIME;
 
    params.mForceXP = ForceXP;
 

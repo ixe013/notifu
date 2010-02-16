@@ -3,38 +3,50 @@
 setlocal
 
 SET PROJECT_NAME=notifu
+SET VCBUILD_DEFAULT_CFG=
 
-echo Getting repository URL
-SET TEMP_NAME=.%RANDOM%_%RANDOM%.tmp
-for /f "tokens=2" %%i IN ('svn info') DO @echo %%i | findstr /i /c:http >> %TEMP_NAME%
+echo Zipping versioned project files
+if exist %PROJECT_NAME%.zip del %PROJECT_NAME%.zip
+if exist %PROJECT_NAME%-src.zip del %PROJECT_NAME%-src.zip
+svn st -v | findstr /V /B "[\?CDIX\!\~]" | gawk "{ $0 = substr($0, 6); print $4 }" | zip %PROJECT_NAME%-src.zip -@ 
 
+echo.
+echo Preparing for build
+md %PROJECT_NAME%_build
 
-SET /P SVN_URL= < %TEMP_NAME%
-del %TEMP_NAME%
+pushd %PROJECT_NAME%_build
 
-echo Checking out files
-svn co -q %SVN_URL% %TEMP_NAME%\%PROJECT_NAME%
+unzip -q ..\%PROJECT_NAME%-src.zip
 
-pushd %TEMP_NAME%
-
-echo Creating source zip
-zip -rp -q ..\%PROJECT_NAME%-src.zip %PROJECT_NAME%\*
-
-pushd %PROJECT_NAME%
-
-rem Let's build all configurations
-set VCBUILD_DEFAULT_CFG=
-vcbuild /rebuild
+echo.
+findstr /s /n DebugBreak *.c *.cpp *.h 
+if ERRORLEVEL 1 (
+echo Building...
+vcbuild /nologo
 
 echo Creating binary zip
-zip -j -q ..\..\%PROJECT_NAME%.zip Sample.bat Test.bat release\%PROJECT_NAME%.exe
+zip -j -q ..\%PROJECT_NAME%.zip release\%PROJECT_NAME%.exe x64\release\%PROJECT_NAME%64.exe release\%PROJECT_NAME%.pdb x64\release\%PROJECT_NAME%64.pdb Sample.bat Test.bat 
+) else (
+echo.
+echo Some files or binaries where not build. Fix it or die.
+if exist ..\%PROJECT_NAME%.zip del ..\%PROJECT_NAME%.zip
+if exist ..\%PROJECT_NAME%-src.zip del ..\%PROJECT_NAME%-src.zip
+)
 
 popd
-popd
 
-rd /s /q %TEMP_NAME%
+rd /s /q %PROJECT_NAME%_build 
 
+echo.
 dir *.zip | findstr zip
+echo.
+unzip -l %PROJECT_NAME%.zip *.exe *.pdb
+if NOT ERRORLEVEL 0 (
+echo.
+echo Binary not found in distribution. Fix it or die.
+if exist ..\%PROJECT_NAME%.zip del ..\%PROJECT_NAME%.zip
+if exist ..\%PROJECT_NAME%-src.zip del ..\%PROJECT_NAME%-src.zip
+)
 echo.
 echo Done.
 endlocal

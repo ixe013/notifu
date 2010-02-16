@@ -21,6 +21,8 @@ public:
 	MultiValueArg<tstring, 0>  Title;
 	MultiValueArg<tstring, 1> Text;
 	FlagArg Fix;
+	FlagArg NoSound;
+	FlagArg NoRespect;
 	FlagArg ForceXP;
 	ValueArg<tstring> IconFileName;
 
