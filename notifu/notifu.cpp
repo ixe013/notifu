@@ -36,6 +36,19 @@ CAppModule _Module;
 * @return One of the error codes documeneted in the enum above.
 */
 /* ---------------------------------------------------------------------------- */
+#ifdef _CONSOLE
+int _tmain(int argc, const TCHAR *argv[])
+{
+   int errorlevel = eUnknown;
+
+   TRACE(eINFO, L"Notifu process %d starting (http://www.paralint.com/projects/notifu/)\n", GetProcessId(GetCurrentProcess()));
+   TRACE(eINFO, L"%s build\n", __TIMESTAMP__);
+
+   gCommandLine.Setup();
+
+   gCommandLine.Parse(argc, argv);
+
+#else
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
    int errorlevel = eUnknown;
@@ -46,6 +59,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
    gCommandLine.Setup();
 
    gCommandLine.Parse(lpCmdLine);
+#endif
 
    if (gCommandLine.Fix)
    {
