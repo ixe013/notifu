@@ -11,6 +11,7 @@ protected:
 
 public:
 	CQueryContinueOneInstance(DWORD d = 0);
+	~CQueryContinueOneInstance();
 
 	STDMETHOD(QueryContinue)(VOID);
    bool WasReplaced();

@@ -16,7 +16,7 @@ HRESULT NotifyUser(const NOTIFU_PARAM& params, IQueryContinue *querycontinue, IU
    HRESULT result = E_FAIL;
 
    IUserNotification *un = 0;
-   IUserNotification2 *deux = 0; //French pun : un above stands for UserNotification. deux means 2.
+   IUserNotification2 *deux = 0; //French pun : "un" above stands for UserNotification but it also means 1 in French. deux means 2.
 
    //First try with the Vista/Windows 7 interface
    //(unless /xp flag is specified

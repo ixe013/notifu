@@ -26,6 +26,8 @@ CCommandLine::CCommandLine()
 , NoSound(L"q", L"Do not play a sound when the tooltip is displayed")
 , NoRespect(L"w", L"Show the tooltip even if the user is in the quiet period that follows his very first login (Windows 7 and up)")
 , ForceXP(L"xp", L"Force WindowsXP ballon tips behavior")
+, Queue(L"c", L"Constant (persistent) instance, will not be dismissed by new instances")
+, KillAll(L"k", L"Removes every instance of Notifu, even the ones who are waiting to be displayed")
 , IconFileName(L"i", L"Specify an icon to use ('parent' uses the icon of the parent process)")
 {
 }
@@ -51,6 +53,8 @@ void CCommandLine::Setup()
 	AddFlag(NoSound);
 	AddFlag(NoRespect);
 	AddFlag(ForceXP);
+	AddFlag(Queue);
+	AddFlag(KillAll);
 }
 
 HRESULT CCommandLine::CopyCommandLineToParams(NOTIFU_PARAM& params)
@@ -74,11 +78,13 @@ HRESULT CCommandLine::CopyCommandLineToParams(NOTIFU_PARAM& params)
 		params.mType |= NIIF_RESPECT_QUIET_TIME;
 
    params.mForceXP = ForceXP;
+   params.mQueue = Queue;
 
 	params.mIcon = GoFindAnIcon(IconFileName.Value().c_str());
 
 	if(params.mIcon == 0)
-		params.mIcon = LoadIcon(_Module.GetResourceInstance(), MAKEINTRESOURCE(IDI_NOTIFU));
+		//params.mIcon = LoadIcon(_Module.GetResourceInstance(), MAKEINTRESOURCE(IDI_NOTIFU));
+		params.mIcon = LoadIcon(GetModuleHandle(0), MAKEINTRESOURCE(IDI_NOTIFU));
 
 	std::vector<tstring>::const_iterator i;
 

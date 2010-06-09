@@ -24,6 +24,8 @@ public:
 	FlagArg NoSound;
 	FlagArg NoRespect;
 	FlagArg ForceXP;
+	FlagArg Queue;
+	FlagArg KillAll;
 	ValueArg<tstring> IconFileName;
 
 public:

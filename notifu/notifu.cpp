@@ -12,7 +12,7 @@
 #include "UserNotificationCallback.h"
 #include "Trace.h"
 
-CAppModule _Module;
+//CAppModule _Module;
  
 /* -------------------------------------------------------------------------- */
 /** @brief The entry point of the program (it is command line).
@@ -88,12 +88,22 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
 
       gCommandLine.CopyCommandLineToParams(params);
 
-      CQueryContinueOneInstance mqc(params.mDelay);
+      CQueryContinue *cqc = 0;
+
+      if(gCommandLine.Queue)
+      {
+          cqc = new CQueryContinue(params.mDelay);
+      }
+      else
+      {
+          cqc = new CQueryContinueOneInstance(params.mDelay);
+      }
+          
       CUserNotificationCallback unc;
 
       SerializeEnter();
 
-      result = NotifyUser(params, &mqc, &unc);
+      result = NotifyUser(params, cqc, &unc);
 
       SerializeLeave();
 
@@ -102,17 +112,17 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
       errorlevel = unc.GetResultCode();
       if (errorlevel == eUnknown) switch (result)
          {
-            case 0x800704C7 : errorlevel = eClosedBallon; break;
+            case 0x800704C7 : errorlevel = eClosedBallon; break;	  //The operation was cancelled by the user.
             case S_OK : errorlevel = eClickedBallon; break;
-            case S_FALSE :
-               if (mqc.TimeoutReached())
+            case S_FALSE :						//This operation returned because the timeout period expired.
+               if (cqc->TimeoutReached())
                {
                   errorlevel = eTimedOut;
                }
-               else if(mqc.WasReplaced())
+               else if(cqc->getWhatHappened() == MAKE_HRESULT(0, FACILITY_ITF, 1000))
                {
                   errorlevel = eReplaced;
-}
+	           }
                else
                {
 						TRACE(eWARN, L"Unknown reason for exiting (0x%08X)\n", result);
@@ -124,6 +134,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
                gCommandLine.Show(L"IUserNotification is not supported on this version of Windows.");
                break;
          }
+
+      delete cqc;
 
       CoUninitialize();
    }

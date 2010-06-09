@@ -19,8 +19,8 @@
 #define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS	// some CString constructors will be explicit
 
 #include <atlbase.h>
-#include <atlapp.h>
+//#include <atlapp.h>
 //#include <atlstr.h>
 
 
-extern CAppModule _Module;
+//extern CAppModule _Module;

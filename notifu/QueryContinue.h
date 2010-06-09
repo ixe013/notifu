@@ -7,12 +7,15 @@ class CQueryContinue
 protected:
 	DWORD mDelay;
 	DWORD mStarted;
+	HRESULT mWhatHappened;
 
 public:
 	CQueryContinue(DWORD d = 0);
+	virtual ~CQueryContinue();
 
 	void SetTimeout(DWORD d);
 	bool TimeoutReached() const;
+	bool getWhatHappened() const;
 
 	STDMETHOD(QueryInterface)(REFIID iid, void** ppvObj);
    virtual ULONG STDMETHODCALLTYPE AddRef();

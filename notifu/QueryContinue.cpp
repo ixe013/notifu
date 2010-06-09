@@ -7,9 +7,12 @@
 
 CQueryContinue::CQueryContinue(DWORD d)
  : mDelay(0)
+ , mWhatHappened(S_OK)
 {
 	SetTimeout(d);
 }
+
+CQueryContinue::~CQueryContinue() {}
 
 STDMETHODIMP CQueryContinue::QueryInterface(REFIID iid, void FAR* FAR* ppvObj)
 {
@@ -38,10 +41,14 @@ STDMETHODIMP CQueryContinue::QueryContinue(VOID)
 
 	if(TimeoutReached())
 	{
-		result = S_FALSE;
+		result = mWhatHappened = 0x800705B4;
 	}
 
 	return result;
+}
+
+bool CQueryContinue::getWhatHappened() const {
+	return mWhatHappened;
 }
 
 void CQueryContinue::SetTimeout(DWORD d)
