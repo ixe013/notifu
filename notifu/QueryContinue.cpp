@@ -47,7 +47,7 @@ STDMETHODIMP CQueryContinue::QueryContinue(VOID)
 	return result;
 }
 
-bool CQueryContinue::getWhatHappened() const {
+HRESULT CQueryContinue::getWhatHappened() const {
 	return mWhatHappened;
 }
 

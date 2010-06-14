@@ -110,6 +110,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
       DestroyIcon(params.mIcon);
 
       errorlevel = unc.GetResultCode();
+
       if (errorlevel == eUnknown) switch (result)
          {
             case 0x800704C7 : errorlevel = eClosedBallon; break;	  //The operation was cancelled by the user.

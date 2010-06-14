@@ -15,11 +15,11 @@ public:
 
 	void SetTimeout(DWORD d);
 	bool TimeoutReached() const;
-	bool getWhatHappened() const;
+	HRESULT getWhatHappened() const;
 
 	STDMETHOD(QueryInterface)(REFIID iid, void** ppvObj);
-   virtual ULONG STDMETHODCALLTYPE AddRef();
-   virtual ULONG STDMETHODCALLTYPE Release();
+    virtual ULONG STDMETHODCALLTYPE AddRef();
+    virtual ULONG STDMETHODCALLTYPE Release();
 
 	STDMETHOD(QueryContinue)(VOID);
 
