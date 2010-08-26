@@ -3,17 +3,27 @@
 
 static const TCHAR *gAvailableSemaphoreName = L"Local\\NA-06603283-A2A6-4fbc-A659-60851EC426DA";
 static const TCHAR *gWaitingSemaphoreName = L"Local\\NW-D20C9303-7E39-452c-8E3C-CE6020778CB9";
+static const TCHAR *gTerminateAllEventName = L"Local\\NT-43dabdee-86ff-4830-8ef5-4d079c181003";
 
 static HANDLE gAvailableSemaphore = CreateSemaphore(0, 1, 1, gAvailableSemaphoreName); 
 static HANDLE gWaitingSemaphore = CreateSemaphore(0, 0, 1024, gWaitingSemaphoreName); //event
+static HANDLE gTerminateAllEvent = CreateEvent(0, TRUE, FALSE, gTerminateAllEventName); //event
 static bool gInside = false;
 
 
+
+void TerminateAllProcess()
+{
+    SetEvent(gTerminateAllEvent);
+	ReleaseSemaphore(gWaitingSemaphore, 1, 0);
+}
 
 void SerializeEnter()
 {
 	if(SignalObjectAndWait(gWaitingSemaphore, gAvailableSemaphore, INFINITE, FALSE) == WAIT_OBJECT_0)
 	{
+        //We got hold of the "available" semaphore. Decrement the "waiting" semaphore
+        //to indicate that we are not waiting anymore
 		WaitForSingleObject(gWaitingSemaphore, INFINITE);
 		gInside = true;
 	}
@@ -34,6 +44,10 @@ bool ThreadWaiting()
 	}
 
 	return result;
+}
+
+bool KillPending() {
+	return WaitForSingleObject(gTerminateAllEvent, 0) == WAIT_OBJECT_0;
 }
 
 void SerializeLeave()

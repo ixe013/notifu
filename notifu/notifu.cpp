@@ -78,6 +78,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
          gCommandLine.Show(L"Unable to enable balloon tips in the registry.\n\nPlease add EnableBalloonTips=1 under HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced");
       }
    }
+   else if(gCommandLine.KillAll)
+   {
+       TerminateAllProcess();
+   }
 
    if (gCommandLine.Continue())
    {

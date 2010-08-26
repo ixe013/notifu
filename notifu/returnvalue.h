@@ -14,6 +14,7 @@ enum
 	eContextMenu = 6, /// IUserNotification is not supported on this system
 	eSystemNotificationArea = 7, /// IUserNotification is not supported on this system
 	eReplaced = 8, /// A new instance of Notifu dismissed a running instace
+	eGracefullyKilled = 9, /// A new instance of Notifu killed all running instaces
 	eUnknown = 255
 };
 
