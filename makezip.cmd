@@ -23,6 +23,8 @@ echo.
 findstr /s /n DebugBreak *.c *.cpp *.h 
 if ERRORLEVEL 1 (
 echo Building...
+    dir /s /b *.vcxproj
+    pause
     msbuild notifu\notifu.vcxproj /nologo /v:q /p:Platform=Win32;Configuration=Debug
     msbuild notifu\notifu.vcxproj /nologo /v:q /p:Platform=Win32;Configuration=Release
     msbuild notifu\notifu.vcxproj /nologo /v:q /p:Platform=Win64;Configuration=Debug
@@ -41,7 +43,7 @@ echo Building...
 
 popd
 
-rd /s /q %PROJECT_NAME%_build 
+::rd /s /q %PROJECT_NAME%_build 
 
 echo.
 dir *.zip | findstr zip
