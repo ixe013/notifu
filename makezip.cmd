@@ -25,7 +25,7 @@ echo Building...
 vcbuild /nologo
 
 echo Creating binary zip
-zip -j -q ..\%PROJECT_NAME%.zip release\%PROJECT_NAME%.exe x64\release\%PROJECT_NAME%64.exe release\%PROJECT_NAME%.pdb x64\release\%PROJECT_NAME%64.pdb Sample.bat Test.bat 
+zip -j -q ..\%PROJECT_NAME%.zip release\%PROJECT_NAME%.exe x64\release\%PROJECT_NAME%64.exe release\c%PROJECT_NAME%.exe release\%PROJECT_NAME%.pdb release\c%PROJECT_NAME%.pdb x64\release\%PROJECT_NAME%64.pdb Sample.bat Test.bat 
 ) else (
 echo.
 echo Some files or binaries where not build. Fix it or die.
