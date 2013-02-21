@@ -14,6 +14,7 @@
     <ProjectGuid>{BABCFB8F-4C1C-45B9-BC21-92AB76BD3B88}</ProjectGuid>
     <RootNamespace>cnotifu</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <ProjectName>notifu (Console, batch)</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -43,6 +44,10 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">notifu</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.com</TargetExt>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">notifu</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.com</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -116,7 +121,6 @@
     <ClInclude Include="..\notifu\CommandLineParser.h" />
     <ClInclude Include="..\notifu\extern.h" />
     <ClInclude Include="..\notifu\Icon.h" />
-    <ClInclude Include="..\notifu\NOTIFU_PARAM.h" />
     <ClInclude Include="..\notifu\NotifyUser.h" />
     <ClInclude Include="..\notifu\QueryContinue.h" />
     <ClInclude Include="..\notifu\QueryContinueOneInstance.h" />
