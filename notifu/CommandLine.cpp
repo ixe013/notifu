@@ -1,5 +1,29 @@
-// CommandLine.cpp: implementation of the CCommandLine class.
+// Copyright (c) 2019, Solutions Paralint inc.                                     
+// All rights reserved.                                                            
+//                                                                                 
+// Redistribution and use in source and binary forms, with or without              
+// modification, are permitted provided that the following conditions are met:     
+//     * Redistributions of source code must retain the above copyright            
+//       notice, this list of conditions and the following disclaimer.             
+//     * Redistributions in binary form must reproduce the above copyright         
+//       notice, this list of conditions and the following disclaimer in the       
+//       documentation and/or other materials provided with the distribution.      
+//     * Neither the name of the <organization> nor the                            
+//       names of its contributors may be used to endorse or promote products      
+//       derived from this software without specific prior written permission.     
+//                                                                                 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED   
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE          
+// DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY              
+// DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES      
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;    
+// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND     
+// ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS   
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                    
 //
+// CommandLine.cpp: implementation of the CCommandLine class.
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -28,6 +52,7 @@ CCommandLine::CCommandLine()
 , ForceXP(L"xp", L"Force WindowsXP ballon tips behavior")
 , Queue(L"c", L"Constant (persistent) instance, will not be dismissed by new instances")
 , KillAll(L"k", L"Removes every instance of Notifu, even the ones who are waiting to be displayed")
+, License(L"l", L"Diplay the license (BSD-3-Clause)")
 , IconFileName(L"i", L"Specify an icon to use ('parent' uses the icon of the parent process)")
 {
 }
@@ -38,6 +63,7 @@ void CCommandLine::Setup()
 	Type.AddValue(L"info", L"The message is an informational message");
 	Type.AddValue(L"warn", L"The message is an warning message");
 	Type.AddValue(L"error", L"The message is an error message");
+	Type.AddValue(L"none", L"Do not display an icon next to the message");
 
 	Delay.SetDefaultValue(0);
 	Type.SetDefaultValue(L"info");
@@ -55,6 +81,7 @@ void CCommandLine::Setup()
 	AddFlag(ForceXP);
 	AddFlag(Queue);
 	AddFlag(KillAll);
+	AddFlag(License);
 }
 
 HRESULT CCommandLine::CopyCommandLineToParams(NOTIFU_PARAM& params)
@@ -68,7 +95,10 @@ HRESULT CCommandLine::CopyCommandLineToParams(NOTIFU_PARAM& params)
 		params.mType = NIIF_WARNING;
 	else if(Type.Value() == L"error")
 		params.mType = NIIF_ERROR;
-	else
+	else if(Type.Value() == L"none")
+        //should have been the default from the stard, but I don't want to introduce a breaking change now
+		params.mType = 0; 
+    else
 		params.mType = NIIF_INFO;
 
 	if(NoSound)

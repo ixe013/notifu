@@ -1,3 +1,28 @@
+// Copyright (c) 2020, Solutions Paralint inc.                                     
+// All rights reserved.                                                            
+//                                                                                 
+// Redistribution and use in source and binary forms, with or without              
+// modification, are permitted provided that the following conditions are met:     
+//     * Redistributions of source code must retain the above copyright            
+//       notice, this list of conditions and the following disclaimer.             
+//     * Redistributions in binary form must reproduce the above copyright         
+//       notice, this list of conditions and the following disclaimer in the       
+//       documentation and/or other materials provided with the distribution.      
+//     * Neither the name of the <organization> nor the                            
+//       names of its contributors may be used to endorse or promote products      
+//       derived from this software without specific prior written permission.     
+//                                                                                 
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED   
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE          
+// DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY              
+// DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES      
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;    
+// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND     
+// ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS   
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                    
+//                                                                                 
 // Microsoft Visual C++ generated resource script.
 //
 #include "resource.h"
@@ -51,9 +76,9 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,7,0,0
- PRODUCTVERSION 1,7,0,0
- FILEFLAGSMASK 0x17L
+ FILEVERSION 1,7,1,0
+ PRODUCTVERSION 1,7,1,0
+ FILEFLAGSMASK 0x171L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
 #else
@@ -69,14 +94,14 @@ BEGIN
         BEGIN
             VALUE "Comments", "This free, open source utility lets you display a yellow pop-up balloon in the from the tray, using the same API in Windows itself uses (IUserNotification)."
             VALUE "CompanyName", "Paralint.com"
-            VALUE "FileDescription", "Notifu uses IUserNotification to display a yellow pop-up balloon. Type /? for more information."
-            VALUE "FileVersion", "1.7"
+            VALUE "FileDescription", "Notification"
+            VALUE "FileVersion", "1.7.1"
             VALUE "InternalName", "notifu"
             VALUE "LegalCopyright", "http://www.paralint.com/projects/notifu/"
-            VALUE "LegalTrademarks", "BSD license, have fun."
+            VALUE "LegalTrademarks", "BSD-3-Clause license, run with /l for licence text"
             VALUE "OriginalFilename", "notifu.exe"
             VALUE "ProductName", "Notifu"
-            VALUE "ProductVersion", "1.7"
+            VALUE "ProductVersion", "1.7.1"
         END
     END
     BLOCK "VarFileInfo"
