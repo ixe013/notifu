@@ -1,5 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+Copyright (c) 2019, Solutions Paralint inc.                                     
+All rights reserved.                                                            
+                                                                                
+Redistribution and use in source and binary forms, with or without              
+modification, are permitted provided that the following conditions are met:     
+    * Redistributions of source code must retain the above copyright            
+      notice, this list of conditions and the following disclaimer.             
+    * Redistributions in binary form must reproduce the above copyright         
+      notice, this list of conditions and the following disclaimer in the       
+      documentation and/or other materials provided with the distribution.      
+    * Neither the name of the <organization> nor the                            
+      names of its contributors may be used to endorse or promote products      
+      derived from this software without specific prior written permission.     
+                                                                                
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED   
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE          
+DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY              
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES      
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;    
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND     
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS   
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                    
+  -->
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -21,10 +47,12 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -97,6 +125,7 @@
     <ClCompile Include="..\notifu\QueryContinueOneInstance.cpp" />
     <ClCompile Include="..\notifu\RegistryFix.cpp" />
     <ClCompile Include="..\notifu\Serialize.cpp" />
+    <ClCompile Include="..\notifu\License.cpp" />
     <ClCompile Include="..\notifu\Settings.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </PrecompiledHeader>
@@ -128,6 +157,7 @@
     <ClInclude Include="..\notifu\resource.h" />
     <ClInclude Include="..\notifu\returnvalue.h" />
     <ClInclude Include="..\notifu\Serialize.h" />
+    <ClInclude Include="..\notifu\License.h" />
     <ClInclude Include="..\notifu\settings.h" />
     <ClInclude Include="..\notifu\stdafx.h" />
     <ClInclude Include="..\notifu\Trace.h" />
